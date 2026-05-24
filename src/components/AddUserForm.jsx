@@ -35,7 +35,7 @@ export default function AddUserForm({ onSuccess }) {
       setMessage({ type: 'success', text: 'Data berhasil ditambahkan!' });
       setFormData({ name: '', email: '', phone: '' }); // reset form
 
-      if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess(response.data);
     } catch (error) {
       setMessage({ type: 'error', text: 'Gagal menambahkan data!' });
     } finally {

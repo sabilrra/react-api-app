@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import UserList from './components/UserList';
-import AddUserForm from './components/AddUserForm';
 import PokemonDashboard from './components/PokemonDashboard';
 import './App.css';
 
@@ -31,10 +30,7 @@ function App() {
 
       <main>
         {activeTab === 'praktikum' && (
-          <>
-            <AddUserForm />
-            <UserList />
-          </>
+          <UserList />
         )}
 
         {activeTab === 'dashboard' && <PokemonDashboard />}

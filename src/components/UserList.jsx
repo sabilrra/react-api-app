@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserTable from './UserTable';
 import LoadingSpinner from './LoadingSpinner';
+import AddUserForm from './AddUserForm';
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
@@ -44,6 +45,14 @@ export default function UserList() {
     }
   };
 
+  const handleAddUser = (newUser) => {
+    setUsers(prev => {
+      const maxId = prev.length > 0 ? Math.max(...prev.map(u => u.id)) : 0;
+      const userWithId = { ...newUser, id: maxId + 1 };
+      return [userWithId, ...prev];
+    });
+  };
+
   // filter search
   const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -63,6 +72,7 @@ export default function UserList() {
 
   return (
     <div style={styles.container}>
+      <AddUserForm onSuccess={handleAddUser} />
       <h2>Daftar Pengguna</h2>
 
       <input
