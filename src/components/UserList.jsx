@@ -14,29 +14,13 @@ export default function UserList() {
     fetchUsers();
   }, []);
 
-  // mapping nama kelompok biar lebih relate
-  const namaIndonesia = {
-    1: { name: "Muhammad Mu'taz Syafiq", email: 'mutaz.syafiq@gmail.com' },
-    2: { name: 'Sabila Rahma Aulia', email: 'sabila.aulia@gmail.com' },
-    3: { name: 'Bilqis Nailatul Muna', email: 'bilqis.muna@gmail.com' },
-    4: { name: 'Tiara Rizki Anindita', email: 'tiara.anindita@gmail.com' },
-  };
-
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
 
     try {
       const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-
-      // ambil 4 data aja terus ganti namanya
-      const updatedUsers = response.data.slice(0, 4).map(user => ({
-        ...user,
-        name: namaIndonesia[user.id]?.name || user.name,
-        email: namaIndonesia[user.id]?.email || user.email,
-      }));
-
-      setUsers(updatedUsers);
+      setUsers(response.data);
     } catch (err) {
       setError('Gagal mengambil data. Periksa koneksi internet Anda.');
       console.error('API Error:', err);
@@ -49,7 +33,7 @@ export default function UserList() {
     setUsers(prev => {
       const maxId = prev.length > 0 ? Math.max(...prev.map(u => u.id)) : 0;
       const userWithId = { ...newUser, id: maxId + 1 };
-      return [userWithId, ...prev];
+      return [...prev, userWithId];
     });
   };
 
