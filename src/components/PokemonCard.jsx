@@ -1,7 +1,6 @@
-// src/components/PokemonCard.jsx
 import styles from './PokemonCard.module.css';
 
-// Warna untuk setiap tipe Pokemon
+// warna buat badge tipe pokemon
 const typeColors = {
   normal: '#A8A878',
   fire: '#F08030',

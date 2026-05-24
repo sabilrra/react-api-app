@@ -1,4 +1,3 @@
-// src/components/AddUserForm.jsx
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -34,10 +33,9 @@ export default function AddUserForm({ onSuccess }) {
       );
 
       setMessage({ type: 'success', text: 'Data berhasil ditambahkan!' });
-      setFormData({ name: '', email: '', phone: '' });
+      setFormData({ name: '', email: '', phone: '' }); // reset form
 
       if (onSuccess) onSuccess();
-
     } catch (error) {
       setMessage({ type: 'error', text: 'Gagal menambahkan data!' });
     } finally {

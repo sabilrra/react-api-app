@@ -1,22 +1,19 @@
-// src/components/UserList.jsx
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserTable from './UserTable';
 import LoadingSpinner from './LoadingSpinner';
 
 export default function UserList() {
-  // STATE untuk manajemen data API
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // useEffect untuk mengambil data saat komponen pertama kali dimuat
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // Daftar nama Indonesia untuk mengganti nama default dari API
+  // mapping nama kelompok biar lebih relate
   const namaIndonesia = {
     1: { name: "Muhammad Mu'taz Syafiq", email: 'mutaz.syafiq@gmail.com' },
     2: { name: 'Sabila Rahma Aulia', email: 'sabila.aulia@gmail.com' },
@@ -24,7 +21,6 @@ export default function UserList() {
     4: { name: 'Tiara Rizki Anindita', email: 'tiara.anindita@gmail.com' },
   };
 
-  // Fungsi untuk mengambil data dari API
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
@@ -32,7 +28,7 @@ export default function UserList() {
     try {
       const response = await axios.get('https://jsonplaceholder.typicode.com/users');
 
-      // Ambil 4 data pertama dan ganti nama dengan data kelompok
+      // ambil 4 data aja terus ganti namanya
       const updatedUsers = response.data.slice(0, 4).map(user => ({
         ...user,
         name: namaIndonesia[user.id]?.name || user.name,
@@ -48,13 +44,12 @@ export default function UserList() {
     }
   };
 
-  // Filter data berdasarkan search term
+  // filter search
   const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // CONDITIONAL RENDERING berdasarkan state
   if (loading) return <LoadingSpinner />;
 
   if (error) return (

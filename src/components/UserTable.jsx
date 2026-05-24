@@ -1,4 +1,3 @@
-// src/components/UserTable.jsx
 export default function UserTable({ users }) {
   return (
     <table style={styles.table}>

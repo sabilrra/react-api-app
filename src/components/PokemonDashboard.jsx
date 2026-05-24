@@ -1,4 +1,3 @@
-// src/components/PokemonDashboard.jsx
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PokemonCard from './PokemonCard';
@@ -22,18 +21,17 @@ export default function PokemonDashboard() {
     setError(null);
 
     try {
-      // Endpoint 1: Ambil daftar pokemon (30 data)
+      // ambil daftar 30 pokemon dulu
       const listResponse = await axios.get(
         'https://pokeapi.co/api/v2/pokemon?limit=30'
       );
 
-      // Endpoint 2: Ambil detail setiap pokemon (gambar, tipe, stats)
+      // terus ambil detail tiap pokemon (buat dapet gambar, tipe, stats)
       const detailPromises = listResponse.data.results.map((pokemon) =>
         axios.get(pokemon.url)
       );
       const detailResponses = await Promise.all(detailPromises);
 
-      // Olah data response menjadi format yang lebih rapi
       const pokemonData = detailResponses.map((res) => ({
         id: res.data.id,
         name: res.data.name,
@@ -49,7 +47,7 @@ export default function PokemonDashboard() {
         weight: res.data.weight,
       }));
 
-      // Kumpulkan semua tipe yang ada untuk dropdown filter
+      // kumpulin semua tipe yg ada buat dropdown filter
       const types = [...new Set(pokemonData.flatMap((p) => p.types))];
       setAllTypes(types.sort());
 
@@ -62,7 +60,6 @@ export default function PokemonDashboard() {
     }
   };
 
-  // Filter berdasarkan nama (search) dan tipe (filter)
   const filteredPokemon = pokemonList.filter((pokemon) => {
     const matchSearch = pokemon.name
       .toLowerCase()

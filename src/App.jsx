@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState } from 'react';
 import UserList from './components/UserList';
 import AddUserForm from './components/AddUserForm';
