@@ -49,6 +49,17 @@ export default function PokemonCard({ pokemon }) {
           ))}
         </div>
 
+        <div className={styles.measurements}>
+          <div className={styles.statItem}>
+            <span className={styles.statLabel}>Height</span>
+            <span className={styles.statValue}>{pokemon.height / 10} m</span>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statLabel}>Weight</span>
+            <span className={styles.statValue}>{pokemon.weight / 10} kg</span>
+          </div>
+        </div>
+
         <div className={styles.stats}>
           <div className={styles.statItem}>
             <span className={styles.statLabel}>HP</span>
@@ -61,6 +72,14 @@ export default function PokemonCard({ pokemon }) {
           <div className={styles.statItem}>
             <span className={styles.statLabel}>DEF</span>
             <span className={styles.statValue}>{pokemon.stats.defense}</span>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statLabel}>SP.A</span>
+            <span className={styles.statValue}>{pokemon.stats.specialAttack}</span>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statLabel}>SP.D</span>
+            <span className={styles.statValue}>{pokemon.stats.specialDefense}</span>
           </div>
           <div className={styles.statItem}>
             <span className={styles.statLabel}>SPD</span>

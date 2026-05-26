@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <header className="app-header">
-        <h1>React Integrasi API</h1>
+        <h1>DASHBOARD REACT</h1>
         <p>Kelompok Kuman - Kelas T2G</p>
       </header>
 

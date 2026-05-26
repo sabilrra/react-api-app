@@ -21,9 +21,9 @@ export default function PokemonDashboard() {
     setError(null);
 
     try {
-      // ambil daftar 30 pokemon dulu
+      // ambil daftar 50 pokemon dulu
       const listResponse = await axios.get(
-        'https://pokeapi.co/api/v2/pokemon?limit=30'
+        'https://pokeapi.co/api/v2/pokemon?limit=300'
       );
 
       // terus ambil detail tiap pokemon (buat dapet gambar, tipe, stats)
@@ -41,6 +41,8 @@ export default function PokemonDashboard() {
           hp: res.data.stats[0].base_stat,
           attack: res.data.stats[1].base_stat,
           defense: res.data.stats[2].base_stat,
+          specialAttack: res.data.stats[3].base_stat,
+          specialDefense: res.data.stats[4].base_stat,
           speed: res.data.stats[5].base_stat,
         },
         height: res.data.height,

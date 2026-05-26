@@ -66,6 +66,15 @@
   text-transform: capitalize;
 }
 
+.measurements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
