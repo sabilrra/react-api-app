@@ -16,34 +16,34 @@ Proyek ini dibuat sebagai tugas mata kuliah **Algoritma Pemrograman dan Struktur
 Aplikasi ini terdiri dari dua bagian utama:
 
 ### Praktikum 1 & 2 - GET dan POST API
-Mengambil data pengguna dari **JSONPlaceholder API** dan menampilkannya dalam bentuk tabel. Tersedia juga form untuk menambahkan data pengguna baru menggunakan method POST.
+Mengambil data pengguna dari **JSONPlaceholder API** dan menampilkannya dalam bentuk tabel. Tersedia juga form untuk menambahkan data pengguna baru secara dinamis ke state lokal setelah simulasi POST request berhasil dilakukan.
 
 - **GET Request**: Mengambil daftar pengguna dari `https://jsonplaceholder.typicode.com/users`
 - **POST Request**: Mengirim data pengguna baru ke `https://jsonplaceholder.typicode.com/users`
 
 ### Tugas Mandiri - Pokemon Dashboard
-Mini dashboard yang terintegrasi dengan **Pokemon API** (https://pokeapi.co). Menampilkan data Pokemon dalam bentuk card/grid dengan fitur pencarian dan filter berdasarkan tipe.
+Dashboard interaktif yang terintegrasi dengan **PokeAPI** (https://pokeapi.co). Menampilkan data detail Pokemon dalam bentuk card/grid dengan fitur pencarian real-time dan filter berdasarkan tipe.
 
-- **Endpoint 1**: `https://pokeapi.co/api/v2/pokemon?limit=30` - Daftar Pokemon
-- **Endpoint 2**: `https://pokeapi.co/api/v2/pokemon/{id}` - Detail setiap Pokemon
+- **Endpoint 1**: `https://pokeapi.co/api/v2/pokemon?limit=250` - Mengambil daftar 250 Pokemon
+- **Endpoint 2**: `https://pokeapi.co/api/v2/pokemon/{id}` - Detail stats, tipe, gambar, tinggi, dan berat setiap Pokemon
 
 ## Fitur
 
-- Pengambilan data dari API menggunakan Axios
-- Pengiriman data ke backend dengan method POST
-- Pencarian data secara real-time
-- Filter berdasarkan tipe Pokemon
-- Loading state dengan spinner animasi
-- Error handling dengan tombol retry
-- Tampilan responsif untuk mobile
-- Styling menggunakan CSS Module
+- **Integrasi API dengan Axios**: Pengambilan data dari API menggunakan Axios (GET) & simulasi pengiriman data (POST).
+- **Sinkronisasi State**: Data pengguna yang ditambahkan melalui form akan langsung masuk ke tabel secara real-time.
+- **Pencarian Real-time**: Fitur pencarian pengguna (berdasarkan nama/email) dan Pokemon (berdasarkan nama).
+- **Filter Tipe Pokemon**: Filter dropdown dinamis berdasarkan tipe Pokemon yang tersedia.
+- **Statistik Pokemon Lengkap**: Menampilkan tinggi (height), berat (weight), serta stats dasar (HP, ATK, DEF, SP.A, SP.D, SPD).
+- **Loading & Error Handling**: Animasi loading spinner dan handling error koneksi dengan tombol retry (coba lagi).
+- **Desain Modern & Responsif**: Tampilan menarik dan ramah perangkat mobile (responsive layout).
+- **Styling Utility-First**: Diimplementasikan menggunakan Tailwind CSS v4.
 
 ## Teknologi yang Digunakan
 
-- React 19
+- React
 - Vite
+- Tailwind CSS v4 (menggunakan `@tailwindcss/vite`)
 - Axios
-- CSS Module
 
 ## Struktur Proyek
 
@@ -51,18 +51,15 @@ Mini dashboard yang terintegrasi dengan **Pokemon API** (https://pokeapi.co). Me
 react-api-app/
 ├── src/
 │   ├── components/
-│   │   ├── LoadingSpinner.jsx          # Komponen loading animasi
-│   │   ├── UserTable.jsx               # Tabel data pengguna
-│   │   ├── UserList.jsx                # Logika GET API (Praktikum 1)
-│   │   ├── AddUserForm.jsx             # Form POST API (Praktikum 2)
-│   │   ├── PokemonDashboard.jsx        # Dashboard Pokemon (Tugas Mandiri)
-│   │   ├── PokemonDashboard.module.css # Styling dashboard
-│   │   ├── PokemonCard.jsx             # Card Pokemon
-│   │   └── PokemonCard.module.css      # Styling card
-│   ├── App.jsx                         # Komponen utama
-│   ├── App.css                         # Styling aplikasi
-│   ├── index.css                       # Styling global
-│   └── main.jsx                        # Entry point
+│   │   ├── LoadingSpinner.jsx      # Komponen loading animasi spinner
+│   │   ├── UserTable.jsx           # Tabel presentasional data pengguna
+│   │   ├── UserList.jsx            # Logika GET API & pencarian pengguna
+│   │   ├── AddUserForm.jsx         # Form POST API tambah pengguna baru
+│   │   ├── PokemonDashboard.jsx    # Logika dashboard, search & filter Pokemon
+│   │   └── PokemonCard.jsx         # Tampilan card detail stats Pokemon
+│   ├── App.jsx                     # Komponen utama & navigasi tab
+│   ├── index.css                   # Styling global (Tailwind CSS v4 entry)
+│   └── main.jsx                    # Entry point aplikasi
 ├── package.json
 └── README.md
 ```
@@ -92,19 +89,19 @@ Aplikasi akan berjalan di `http://localhost:5173`
 
 ## Alur Kerja Aplikasi
 
-1. Saat aplikasi dibuka, komponen `UserList` memanggil `useEffect` untuk mengambil data dari API
-2. Selama proses pengambilan data, `LoadingSpinner` ditampilkan
-3. Jika berhasil, data ditampilkan dalam tabel (`UserTable`)
-4. Jika gagal, pesan error ditampilkan beserta tombol retry
-5. Pengguna bisa menambah data melalui form (`AddUserForm`) yang mengirim POST request
-6. Pada tab Pokemon Dashboard, data diambil dari 2 endpoint PokeAPI dan ditampilkan dalam bentuk card
-7. Pengguna bisa mencari Pokemon berdasarkan nama dan memfilter berdasarkan tipe
+1. Saat aplikasi dibuka, komponen `UserList` memanggil `useEffect` untuk mengambil data dari API JSONPlaceholder.
+2. Selama proses pengambilan data, `LoadingSpinner` ditampilkan.
+3. Jika berhasil, data ditampilkan dalam tabel (`UserTable`).
+4. Jika gagal, pesan error ditampilkan beserta tombol retry.
+5. Pengguna bisa menambah data melalui form (`AddUserForm`) yang mengirim POST request, lalu mengupdate state lokal `users` agar data langsung tampil di tabel.
+6. Pada tab Pokemon Dashboard, data daftar Pokemon diambil (limit 250) beserta data detail masing-masing Pokemon (melalui `Promise.all` detail request) untuk mendapatkan gambar official-artwork, tipe, serta statistik lengkapnya.
+7. Pengguna bisa mencari Pokemon berdasarkan nama dan memfilter berdasarkan tipe dengan opsi dropdown dinamis.
 
 ## Konsep yang Diterapkan
 
-- **RESTful API**: Menggunakan method GET dan POST untuk berkomunikasi dengan backend
-- **React Hooks**: `useState` untuk state management, `useEffect` untuk side effects
-- **Conditional Rendering**: Menampilkan UI berbeda berdasarkan state (loading, error, sukses)
-- **Async/Await**: Menangani operasi asynchronous saat fetch API
-- **Error Handling**: Try-catch-finally untuk menangkap error dari API
-- **CSS Module**: Styling terisolasi per komponen untuk menghindari konflik
+- **RESTful API**: Menggunakan method GET dan POST untuk berkomunikasi dengan server backend/mockup API.
+- **React Hooks**: `useState` untuk state management, dan `useEffect` untuk fetching data side effects.
+- **Conditional Rendering**: Menampilkan UI berbeda berdasarkan state (loading, error, sukses).
+- **Asynchronous JavaScript**: `async/await` dan `Promise.all` untuk menangani multiple request secara efisien.
+- **Error Handling**: Try-catch-finally untuk menangkap error dari API dan menjaga stabilitas UI.
+- **Tailwind CSS v4**: Utility-first CSS framework untuk styling yang cepat, konsisten, dan sangat responsif tanpa konflik class.
