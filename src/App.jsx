@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="min-h-screen">
       <header className="bg-[#2c3e50] text-white p-6 text-center sm:p-4">
-        <h1 className="text-[1.8rem] mb-1 sm:text-[1.4rem]">DASHBOARD REACT</h1>
-        <p className="text-[14px] opacity-80">Kelompok Kuman - Kelas T2G</p>
+        <h1 className="text-[2.5rem] font-bold mb-2 sm:text-[1.8rem]">DASHBOARD REACT</h1>
+        <p className="text-[18px] opacity-90 sm:text-[15px]">Kelompok Kuman - Kelas T2G</p>
       </header>
 
       <nav className="flex bg-[#34495e] p-0">
