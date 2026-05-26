@@ -14,7 +14,7 @@ export default function UserList() {
     fetchUsers();
   }, []);
 
-  const fetchUsers = async () => {
+  async function fetchUsers() {
     setLoading(true);
     setError(null);
 
@@ -27,7 +27,7 @@ export default function UserList() {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const handleAddUser = (newUser) => {
     setUsers(prev => {
@@ -46,76 +46,34 @@ export default function UserList() {
   if (loading) return <LoadingSpinner />;
 
   if (error) return (
-    <div style={styles.errorContainer}>
-      <p style={styles.errorText}>{error}</p>
-      <button onClick={fetchUsers} style={styles.retryButton}>
+    <div className="text-center p-8">
+      <p className="text-red-500 mb-4">{error}</p>
+      <button onClick={fetchUsers} className="px-4 py-2 bg-blue-500 text-white border-none rounded cursor-pointer hover:bg-blue-600 transition-colors">
         Coba Lagi
       </button>
     </div>
   );
 
   return (
-    <div style={styles.container}>
+    <div className="p-6 max-w-[1200px] mx-auto">
       <AddUserForm onSuccess={handleAddUser} />
-      <h2>Daftar Pengguna</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Daftar Pengguna</h2>
 
       <input
         type="text"
         placeholder="Cari nama atau email..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        style={styles.searchInput}
+        className="w-full p-2.5 mb-4 border border-gray-300 rounded-lg text-base box-border outline-none focus:border-blue-500 transition-colors"
       />
 
-      <p>Menampilkan {filteredUsers.length} dari {users.length} pengguna</p>
+      <p className="text-gray-600 mb-4">Menampilkan {filteredUsers.length} dari {users.length} pengguna</p>
 
       <UserTable users={filteredUsers} />
 
-      <button onClick={fetchUsers} style={styles.refreshButton}>
+      <button onClick={fetchUsers} className="mt-4 px-4 py-2 bg-green-500 text-white border-none rounded cursor-pointer hover:bg-green-600 transition-colors">
         Refresh Data
       </button>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    padding: '1.5rem',
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  searchInput: {
-    width: '100%',
-    padding: '10px',
-    marginBottom: '1rem',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    fontSize: '16px',
-    boxSizing: 'border-box',
-  },
-  errorContainer: {
-    textAlign: 'center',
-    padding: '2rem',
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: '1rem',
-  },
-  retryButton: {
-    padding: '8px 16px',
-    backgroundColor: '#3498db',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  refreshButton: {
-    marginTop: '1rem',
-    padding: '8px 16px',
-    backgroundColor: '#2ecc71',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-};

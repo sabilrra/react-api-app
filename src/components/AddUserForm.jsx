@@ -37,6 +37,7 @@ export default function AddUserForm({ onSuccess }) {
 
       if (onSuccess) onSuccess(response.data);
     } catch (error) {
+      console.error('Error adding user:', error);
       setMessage({ type: 'error', text: 'Gagal menambahkan data!' });
     } finally {
       setIsSubmitting(false);
@@ -44,16 +45,16 @@ export default function AddUserForm({ onSuccess }) {
   };
 
   return (
-    <div style={styles.container}>
-      <h3>Tambah Pengguna Baru</h3>
+    <div className="bg-gray-50 p-6 rounded-lg mb-8">
+      <h3 className="text-xl font-semibold mb-4 text-gray-800">Tambah Pengguna Baru</h3>
 
       {message && (
-        <div style={message.type === 'success' ? styles.success : styles.error}>
+        <div className={`p-2.5 rounded mb-4 ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
           {message.text}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={styles.form}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
           name="name"
@@ -61,7 +62,7 @@ export default function AddUserForm({ onSuccess }) {
           value={formData.name}
           onChange={handleChange}
           required
-          style={styles.input}
+          className="p-2.5 border border-gray-300 rounded text-base outline-none focus:border-blue-500 transition-colors"
         />
 
         <input
@@ -71,7 +72,7 @@ export default function AddUserForm({ onSuccess }) {
           value={formData.email}
           onChange={handleChange}
           required
-          style={styles.input}
+          className="p-2.5 border border-gray-300 rounded text-base outline-none focus:border-blue-500 transition-colors"
         />
 
         <input
@@ -81,13 +82,13 @@ export default function AddUserForm({ onSuccess }) {
           value={formData.phone}
           onChange={handleChange}
           required
-          style={styles.input}
+          className="p-2.5 border border-gray-300 rounded text-base outline-none focus:border-blue-500 transition-colors"
         />
 
         <button
           type="submit"
           disabled={isSubmitting}
-          style={styles.button}
+          className="p-2.5 bg-blue-500 text-white border-none rounded cursor-pointer text-base hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'Mengirim...' : 'Simpan Data'}
         </button>
@@ -95,46 +96,3 @@ export default function AddUserForm({ onSuccess }) {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    backgroundColor: '#f9f9f9',
-    padding: '1.5rem',
-    borderRadius: '8px',
-    marginBottom: '2rem',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-  },
-  input: {
-    padding: '10px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '16px',
-  },
-  button: {
-    padding: '10px',
-    backgroundColor: '#3498db',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-  success: {
-    backgroundColor: '#d4edda',
-    color: '#155724',
-    padding: '10px',
-    borderRadius: '4px',
-    marginBottom: '1rem',
-  },
-  error: {
-    backgroundColor: '#f8d7da',
-    color: '#721c24',
-    padding: '10px',
-    borderRadius: '4px',
-    marginBottom: '1rem',
-  },
-};

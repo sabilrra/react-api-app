@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PokemonCard from './PokemonCard';
 import LoadingSpinner from './LoadingSpinner';
-import styles from './PokemonDashboard.module.css';
 
 export default function PokemonDashboard() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -16,14 +15,14 @@ export default function PokemonDashboard() {
     fetchPokemon();
   }, []);
 
-  const fetchPokemon = async () => {
+  async function fetchPokemon() {
     setLoading(true);
     setError(null);
 
     try {
-      // ambil daftar 50 pokemon dulu
+      // ambil daftar 250 pokemon dulu
       const listResponse = await axios.get(
-        'https://pokeapi.co/api/v2/pokemon?limit=300'
+        'https://pokeapi.co/api/v2/pokemon?limit=250'
       );
 
       // terus ambil detail tiap pokemon (buat dapet gambar, tipe, stats)
@@ -75,29 +74,29 @@ export default function PokemonDashboard() {
 
   if (error)
     return (
-      <div className={styles.errorContainer}>
-        <p className={styles.errorText}>{error}</p>
-        <button onClick={fetchPokemon} className={styles.retryButton}>
+      <div className="text-center p-12">
+        <p className="text-red-500 mb-4 text-base">{error}</p>
+        <button onClick={fetchPokemon} className="px-5 py-2.5 bg-blue-500 text-white border-none rounded-md cursor-pointer text-[15px] hover:bg-blue-600 transition-colors">
           Coba Lagi
         </button>
       </div>
     );
 
   return (
-    <div className={styles.container}>
-      <div className={styles.controls}>
+    <div className="p-6 max-w-[1200px] mx-auto sm:p-4">
+      <div className="flex flex-col md:flex-row gap-4 mb-4 flex-wrap">
         <input
           type="text"
           placeholder="Cari pokemon..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
+          className="flex-1 min-w-[200px] px-3.5 py-2.5 border border-gray-300 rounded-lg text-base outline-none transition-colors duration-200 focus:border-blue-500 w-full md:w-auto"
         />
 
         <select
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
-          className={styles.filterSelect}
+          className="px-3.5 py-2.5 border border-gray-300 rounded-lg text-base bg-white cursor-pointer outline-none min-w-[160px] focus:border-blue-500 w-full md:w-auto"
         >
           <option value="semua">Semua Tipe</option>
           {allTypes.map((type) => (
@@ -108,18 +107,18 @@ export default function PokemonDashboard() {
         </select>
       </div>
 
-      <p className={styles.infoText}>
+      <p className="text-gray-600 mb-4 text-sm">
         Menampilkan {filteredPokemon.length} dari {pokemonList.length} Pokemon
       </p>
 
-      <div className={styles.grid}>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-4 sm:grid-cols-1 sm:gap-3">
         {filteredPokemon.map((pokemon) => (
           <PokemonCard key={pokemon.id} pokemon={pokemon} />
         ))}
       </div>
 
       {filteredPokemon.length === 0 && (
-        <p className={styles.noResult}>Pokemon tidak ditemukan.</p>
+        <p className="text-center text-gray-400 p-12 text-base">Pokemon tidak ditemukan.</p>
       )}
     </div>
   );
